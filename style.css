@@ -1,7 +1,10 @@
-html,
-body {
+html, body {
   margin: 0;
   padding: 0;
+}
+
+body {
+  overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 .main-header {
@@ -18,18 +21,31 @@ body {
   color: white;
 }
 
+.card-scroll-wrapper {
+  display: flex;
+  overflow-x: scroll;  /* Allow scrolling */
+  padding: 20px 10px;
+}
+
 #card-container {
   display: flex;
-  justify-content: center;
-  margin: 20px;
+  flex-wrap: nowrap;
+  gap: 10px;
+  padding: 0;
 }
 
 .card {
   width: 300px;
+  height: auto; /* Adjust height as needed */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin: 5px;
+  margin: 0;
+  background-color: white;
+  overflow: hidden; /* Just in case */
 }
 
 .card-content {
@@ -38,14 +54,10 @@ body {
   color: #777;
 }
 
-.card-content h2 {
-  margin-top: 0;
-  font-size: 20px;
-}
-
 .card img {
   width: 100%;
-  height: auto;
+  height: auto;  /* Adjust to maintain aspect ratio */
+  object-fit: cover;
 }
 
 .footer {
