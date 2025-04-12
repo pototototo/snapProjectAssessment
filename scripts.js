@@ -696,8 +696,11 @@ function initializeDeckClicks() {
   cards.forEach(card => {
     card.addEventListener("click", () => {
       const index = parseInt(card.getAttribute("data-card-index"));
-      userDeck.splice(index);
-      showUserDeck();
+      const position = userDeck.indexOf(index);
+      if (position !== -1) {
+        userDeck.splice(position, 1);
+        showUserDeck();
+      }
     });
   });
 }
@@ -719,6 +722,7 @@ function showUserDeck() {
     totalElixir += elixerCosts[index]; // Add to average elixir calculation
 
     const nextCard = templateCard.cloneNode(true);
+    nextCard.setAttribute("data-card-index", index);
     editCardContent(nextCard, title, imageURL, index);
     deckContainer.appendChild(nextCard);
   }
