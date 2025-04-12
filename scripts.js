@@ -640,9 +640,8 @@ function showCards() {
     cardContainer.appendChild(nextCard);
   }
 
-  initializeCardClicks();
+  initializeCardClicks(); // ✅ Attach listeners
   initializeDeckClicks();
-  searchCards();
 }
 
 function editCardContent(card, newTitle, newImageURL, index) {
@@ -697,11 +696,50 @@ function initializeDeckClicks() {
   cards.forEach(card => {
     card.addEventListener("click", () => {
       const index = parseInt(card.getAttribute("data-card-index"));
-      userDeck = userDeck.filter(i => i !== index);
+      userDeck.splice(index);
       showUserDeck();
     });
   });
 }
+
+function showUserDeck() {
+  const deckContainer = document.getElementById("deck-container");
+  const deckInfo = document.getElementById("card-info"); // Make sure this matches your HTML
+  deckContainer.innerHTML = "";
+  deckInfo.innerHTML = ""; // Clear previous info
+
+  const templateCard = document.querySelector(".card");
+
+  let totalElixir = 0;
+
+  for (let i = 0; i < userDeck.length; i++) {
+    const index = userDeck[i];
+    let title = titles[index];
+    let imageURL = URL[index];
+    totalElixir += elixerCosts[index]; // Add to average elixir calculation
+
+    const nextCard = templateCard.cloneNode(true);
+    editCardContent(nextCard, title, imageURL, index);
+    deckContainer.appendChild(nextCard);
+  }
+
+  // Show average elixir and other info
+  if (userDeck.length > 0) {
+    const average = (totalElixir / userDeck.length).toFixed(1);
+    deckInfo.innerHTML = `
+      <div class="deck-info">
+        <h3>Deck Info</h3>
+        <p><strong>Cards:</strong> ${userDeck.length} / 8</p>
+        <p><strong>Average Elixir:</strong> ${average}</p>
+        <ul>
+          ${userDeck.map(i => `<li>${titles[i]}</li>`).join("")}
+        </ul>
+      </div>
+    `;
+  }
+  initializeDeckClicks();
+}
+
 
 function searchCards() {
   const searchQuery = document.getElementById("search-box").value.toLowerCase(); // Get search input and convert to lowercase
@@ -724,44 +762,6 @@ function searchCards() {
       cardContainer.appendChild(nextCard);
     }
   }
-}
 
-function showUserDeck() {
-  const deckContainer = document.getElementById("deck-container");
-  const deckInfo = document.getElementById("card-info"); // Make sure this matches your HTML
-  deckContainer.innerHTML = "";
-  deckInfo.innerHTML = ""; // Clear previous info
-
-  const templateCard = document.querySelector(".card");
-
-  let totalElixir = 0;
-
-  for (let i = 0; i < userDeck.length; i++) {
-    const index = userDeck[i];
-    let title = titles[index];
-    let imageURL = URL[index];
-    totalElixir += elixerCosts[index]; // Add to average elixir calculation
-
-    const nextCard = templateCard.cloneNode(true);
-    nextCard.setAttribute("data-card-index", index);
-    editCardContent(nextCard, title, imageURL, index);
-    deckContainer.appendChild(nextCard);
-  }
-
-  // Show average elixir and other info
-  if (userDeck.length > 0) {
-    const average = (totalElixir / userDeck.length).toFixed(1);
-    deckInfo.innerHTML = `
-      <div class="deck-info">
-        <h3>Deck Info</h3>
-        <p><strong>Cards:</strong> ${userDeck.length} / 8</p>
-        <p><strong>Average Elixir:</strong> ${average}</p>
-        <ul>
-          ${userDeck.map(i => `<li>${titles[i]}</li>`).join("")}
-        </ul>
-      </div>
-    `;
-  }
-
-  initializeDeckClicks();
+  initializeCardClicks();
 }
