@@ -19,6 +19,15 @@
       <div id="card-container"></div>
     </div>
 
+    <div class="footer">
+      <button onclick="sortByRarity();">Sort By Rarity</button>
+      <button onclick="sortByCost();">Sort By Cost</button>
+      <input type="text" id="search-box" placeholder="Search by card name" oninput="searchCards()" />
+    </div>
+
+    <div id = "deck-container"></div>
+
+    <div id="card-info" class="deck-info"></div>
     <!-- Hidden template card for cloning -->
     <div class="card" style="display: none">
       <div class="card-content">
@@ -30,11 +39,6 @@
           <li>Bullet Point 3</li>
         </ul>
       </div>
-    </div>
-
-    <div class="footer">
-      <button onclick="quoteAlert();">Get A Quote!</button>
-      <button onclick="removeLastCard();">Remove A Card!</button>
     </div>
   </body>
 </html>
