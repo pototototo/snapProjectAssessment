@@ -640,7 +640,7 @@ function showCards() {
     cardContainer.appendChild(nextCard);
   }
 
-  initializeCardClicks(); // ✅ Attach listeners
+  initializeCardClicks();
   initializeDeckClicks();
 }
 
@@ -648,7 +648,6 @@ function editCardContent(card, newTitle, newImageURL, index) {
   card.style.display = "block"; // Make card visible
   const cardHeader = card.querySelector("h2");
   cardHeader.textContent = newTitle;
-
   const cardImage = card.querySelector("img");
   cardImage.src = newImageURL;
   cardImage.alt = newTitle + " Poster";
